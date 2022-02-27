@@ -1,3 +1,7 @@
+# Scripts
+export_variables.sh
+*.swp
+*.env
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
