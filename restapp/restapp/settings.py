@@ -81,8 +81,8 @@ DATABASES = {
         'NAME'    : 'db',                 # <-- UPDATED line
         'USER'    : 'piotr',                     # <-- UPDATED line
         'PASSWORD': 'admin123',              # <-- UPDATED line
-        'HOST'    : '192.168.160.2',                # <-- UPDATED line
-        'PORT'    : '33066',
+        'HOST'    : 'db',                # <-- UPDATED line
+        'PORT'    : '3306',
     }
 }
 
