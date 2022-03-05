@@ -1,9 +1,9 @@
 version: '3'
 services:
         'app':
-                build: .
+                image: djangotest
                 ports:
-                        - 10000:80
+                        - 8000:8000
         'db':
                 image: mysql
                 env_file:
