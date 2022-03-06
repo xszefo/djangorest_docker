@@ -12,21 +12,25 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# django-environ object
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '..', 'app.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gyrn5zi7u&*qw3rk(7mo-bw12i%@jcd*kyts8zm5miz_z$mv_b'
+SECRET_KEY = env('DJANGO_SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOST_LIST')
 
 
 # Application definition
@@ -76,8 +80,8 @@ WSGI_APPLICATION = 'restapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
        # 'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line
        # 'NAME'    : 'db',                 # <-- UPDATED line
        # 'USER'    : 'piotr',                     # <-- UPDATED line
@@ -87,6 +91,7 @@ DATABASES = {
     }
 }
 
+print(BASE_DIR)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
