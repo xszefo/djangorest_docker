@@ -5,7 +5,7 @@ RUN pip install --upgrade pip
 WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
+ENTRYPOINT ["bash", "start-script.sh"]
+EXPOSE 8000
 COPY app.env start-script.sh /code/
 COPY restapp/ /code/restapp
-CMD ["bash", "start-script.sh"]
-EXPOSE 8000

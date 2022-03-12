@@ -34,7 +34,7 @@ class Events(APIView):
         
         client = WebClient(token=SLACK_BOT_USER_TOKEN)
 
-        # greet bot
+        # event handler
         if 'event' in slack_message:
             event_message = slack_message.get('event')
 
@@ -54,22 +54,25 @@ class Events(APIView):
             if event_message.get('subtype') == 'bot_message' or user == 'UU7ERFFNW': 
                 return Response(status=status.HTTP_200_OK)        
 
+            # message options
             if any([True for message in GREETINGS if text.lower() in message]):                              
                 greeting = random.choice(GREETINGS)
                 bot_text = '{} <@{}> :wave:'.format(greeting, user)           
                 client.chat_postMessage(channel=channel, text=bot_text)                    
                 return Response(status=status.HTTP_200_OK)
             elif 'uptime' in text.lower():
-                bot_text = subprocess.check_output(['uptime'], shell=True)
+                uptime = subprocess.check_output(['uptime'], shell=True)
+                bot_text = uptime.decode('UTF-8')
                 client.chat_postMessage(channel=channel, text=bot_text)                    
                 return Response(status=status.HTTP_200_OK)
             elif '@UU7ERFFNW' in text:
                 client.chat_postMessage(channel=channel, text='<@UU7ERFFNW> at your service, how can I help?')                    
                 return Response(status=status.HTTP_200_OK)
-            
-            #else:
-            #    bot_text = '{}? Ale o co kaman?'.format(text)
-            #    client.chat_postMessage(method='chat.postMessage', channel=channel, text=bot_text)                    
-            #    return Response(status=status.HTTP_200_OK)
+            else:
+               bot_text = '{}? I do not understand.'.format(text)
+               client.chat_postMessage(method='chat.postMessage', channel=channel, text=bot_text)                    
+               return Response(status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_200_OK)
+
+
