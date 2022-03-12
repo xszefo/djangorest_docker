@@ -18,19 +18,19 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # django-environ object
-env = environ.Env()
+ENV = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '..', 'app.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY') 
+SECRET_KEY = ENV('DJANGO_SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOST_LIST')
+ALLOWED_HOSTS = ENV.list('ALLOWED_HOST_LIST')
 
 
 # Application definition
@@ -80,14 +80,16 @@ WSGI_APPLICATION = 'restapp.wsgi.application'
 
 DATABASES = {
     'default': {
-       # 'ENGINE': env('DB_ENGINE'),
-       # 'NAME': env('DB_NAME'),
-        'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line
-        'NAME'    : env('MYSQL_DATABASE'),                 # <-- UPDATED line
-        'USER'    : env('MYSQL_USER'),                     # <-- UPDATED line
-        'PASSWORD': env('MYSQL_PASSWORD'),              # <-- UPDATED line
-        'HOST'    : 'db',                # <-- UPDATED line
-        'PORT'    : '3306',
+        # Pobrane z pliku env
+        'ENGINE': ENV('DB_ENGINE'),
+        'NAME': ENV('DB_NAME'),
+        # Pobrane dane mysql z pliku env
+        #'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line
+        #'NAME'    : ENV('MYSQL_DATABASE'),                 # <-- UPDATED line
+        #'USER'    : ENV('MYSQL_USER'),                     # <-- UPDATED line
+        #'PASSWORD': ENV('MYSQL_PASSWORD'),              # <-- UPDATED line
+        #'HOST'    : 'db',                # <-- UPDATED line
+        #'PORT'    : '3306',
     }
 }
 
