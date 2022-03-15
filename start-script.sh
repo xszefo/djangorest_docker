@@ -1,13 +1,14 @@
 #! /bin/bash
 
-# if [ $1 -ne nodb ]
-# then
-# 	until nc -v -z -w 5 db 3306
-# 	do
-# 		echo 'Waiting for db...'
-# 		sleep 5
-# 	done
-# fi
+# Check if it's local deploy (not empty, any text) or production with DB
+if [ -z $1 ]
+then
+	until nc -v -z -w 5 db 3306
+	do
+		echo 'Waiting for db...'
+		sleep 5
+	done
+fi
 
 hostname > /code/restapp/templates/api/base.html
 

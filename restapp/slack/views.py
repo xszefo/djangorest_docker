@@ -68,6 +68,14 @@ class Events(APIView):
             elif '@UU7ERFFNW' in text:
                 client.chat_postMessage(channel=channel, text='<@UU7ERFFNW> at your service, how can I help?')                    
                 return Response(status=status.HTTP_200_OK)
+            elif 'hostname' in text.lower():
+                hostname = subprocess.check_output(['hostname'], shell=True)
+                bot_text = hostname.decode('UTF-8')
+                client.chat_postMessage(channel=channel, text=bot_text)  
+            elif 'cpu' in text.lower():
+                cpu = subprocess.check_output(["grep 'processor\|vendor\|name\|MHz'/proc/cpuinfo"], shell=True)
+                bot_text = cpu.decode('UTF-8')
+                client.chat_postMessage(channel=channel, text=bot_text) 
             else:
                bot_text = '{}? I do not understand.'.format(text)
                client.chat_postMessage(method='chat.postMessage', channel=channel, text=bot_text)                    

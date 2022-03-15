@@ -6,9 +6,7 @@ services:
                         - 8000:8000
                 deploy: 
                         replicas: 2
-        # 'db':
-        #         image: mysql
-        #         env_file:
-        #                 - db.env
-        #         ports:
-        #                 - 33066:3306
+        'db':
+                image: mysql
+                env_file:
+                        - db.env

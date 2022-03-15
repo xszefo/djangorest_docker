@@ -81,15 +81,12 @@ WSGI_APPLICATION = 'restapp.wsgi.application'
 DATABASES = {
     'default': {
         # Pobrane z pliku env
-        'ENGINE': ENV('DB_ENGINE'),
-        'NAME': ENV('DB_NAME'),
-        # Pobrane dane mysql z pliku env
-        #'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line
-        #'NAME'    : ENV('MYSQL_DATABASE'),                 # <-- UPDATED line
-        #'USER'    : ENV('MYSQL_USER'),                     # <-- UPDATED line
-        #'PASSWORD': ENV('MYSQL_PASSWORD'),              # <-- UPDATED line
-        #'HOST'    : 'db',                # <-- UPDATED line
-        #'PORT'    : '3306',
+        'ENGINE'  : ENV('DB_ENGINE'),
+        'NAME'    : ENV('DB_NAME'),
+        'USER'    : ENV('MYSQL_USER'),                   
+        'PASSWORD': ENV('MYSQL_PASSWORD'),             
+        'HOST'    : 'db',               
+        'PORT'    : '3306',
     }
 }
 
