@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Check if it's production with DB (no text) or local deploy (not empty, any text) or
+# Check if it's production with DB (no text) or local deploy (not empty, any text)
 if [ -z $1 ]
 then
 	until nc -v -z -w 5 db 3306
