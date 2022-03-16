@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
 
 from datetime import datetime
 
@@ -24,7 +23,6 @@ class Events(APIView):
         GREETINGS = ['hi', 'hello', "what's up"]
 
         if slack_message.get('token') != SLACK_VERIFICATION_TOKEN:
-            #print "Error! Wrong token\nOur: {}\nReceived: {}\n".format(SLACK_VERIFICATION_TOKEN, slack_message.get('token'))
             print("Error! Wrong token\nOur: {}\nReceived: {}\n".format(SLACK_VERIFICATION_TOKEN, slack_message.get('token')))
             return Response(status=status.HTTP_403_FORBIDDEN)
         
@@ -55,32 +53,23 @@ class Events(APIView):
                 return Response(status=status.HTTP_200_OK)        
 
             # message options
-            if any([True for message in GREETINGS if text.lower() in message]):                              
+            if any([True for message in GREETINGS if message in text.lower()]):                              
                 greeting = random.choice(GREETINGS)
                 bot_text = '{} <@{}> :wave:'.format(greeting, user)           
-                client.chat_postMessage(channel=channel, text=bot_text)                    
-                return Response(status=status.HTTP_200_OK)
             elif 'uptime' in text.lower():
                 uptime = subprocess.check_output(['uptime'], shell=True)
                 bot_text = uptime.decode('UTF-8')
-                client.chat_postMessage(channel=channel, text=bot_text)                    
-                return Response(status=status.HTTP_200_OK)
             elif '@UU7ERFFNW' in text:
-                client.chat_postMessage(channel=channel, text='<@UU7ERFFNW> at your service, how can I help?')                    
-                return Response(status=status.HTTP_200_OK)
+                bot_text='<@UU7ERFFNW> at your service, how can I help?'                   
             elif 'hostname' in text.lower():
                 hostname = subprocess.check_output(['hostname'], shell=True)
                 bot_text = hostname.decode('UTF-8')
-                client.chat_postMessage(channel=channel, text=bot_text)  
             elif 'cpu' in text.lower():
-                cpu = subprocess.check_output(["grep 'processor\|vendor\|name\|MHz'/proc/cpuinfo"], shell=True)
+                cpu = subprocess.check_output(["grep 'processor\|vendor\|name\|MHz' /proc/cpuinfo"], shell=True)
                 bot_text = cpu.decode('UTF-8')
-                client.chat_postMessage(channel=channel, text=bot_text) 
             else:
                bot_text = '{}? I do not understand.'.format(text)
-               client.chat_postMessage(method='chat.postMessage', channel=channel, text=bot_text)                    
-               return Response(status=status.HTTP_200_OK)
+                               
+            client.chat_postMessage(method='chat.postMessage', channel=channel, text=bot_text)    
 
         return Response(status=status.HTTP_200_OK)
-
-
