@@ -1,7 +1,8 @@
 #! /bin/bash
 
-# Check if it's production with DB (no text) or local deploy (not empty, any text)
-if [ -z $1 ]
+# Check if it's production with DB (NODB is empty) or local deploy (not empty, any text)
+echo "NODB = $NODB"
+if [ -z $NODB ]
 then
 	until nc -v -z -w 5 db 3306
 	do

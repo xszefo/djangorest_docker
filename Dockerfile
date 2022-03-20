@@ -7,5 +7,7 @@ COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 ENTRYPOINT ["bash", "start-script.sh"]
 EXPOSE 8000
-COPY app.env start-script.sh /code/
+ARG APP_ENV_FILE=app.env
+COPY $APP_ENV_FILE /code/app.env
+COPY start-script.sh /code/
 COPY restapp/ /code/restapp
