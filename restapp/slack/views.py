@@ -67,6 +67,8 @@ class Events(APIView):
             elif 'cpu' in text.lower():
                 cpu = subprocess.check_output(["grep 'processor\|vendor\|name\|MHz' /proc/cpuinfo"], shell=True)
                 bot_text = cpu.decode('UTF-8')
+            elif 'help' in text.lower():
+                bot_text = 'Available commands:\nuptime\nhostname\ncpu\nhelp'
             else:
                bot_text = '{}? I do not understand.'.format(text)
                                
